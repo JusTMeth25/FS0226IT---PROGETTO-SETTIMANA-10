@@ -16,3 +16,14 @@
   font-size: 0.9rem;
   opacity: 0.9;
 }
+
+/* Responsive mobile */
+@media (max-width: 576px) {
+  .footer {
+    padding: 1rem;
+  }
+
+  .footer p {
+    font-size: 0.8rem;
+  }
+}
