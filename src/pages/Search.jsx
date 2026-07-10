@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { searchCity } from "../services/weatherService";
 import "./Search.css";
 
 const Search = () => {
   const [city, setCity] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
 
     const trimmedCity = city.trim();
@@ -14,7 +18,30 @@ const Search = () => {
       alert("Inserisci il nome di una città");
       return;
     }
-    navigate(`/detail/${trimmedCity}`);
+
+    setLoading(true);
+    setShowSuggestions(false);
+
+    try {
+      const results = await searchCity(trimmedCity);
+
+      if (results.length === 1) {
+        const r = results[0];
+        navigate(`/detail/${encodeURIComponent(r.name)}?lat=${r.lat}&lon=${r.lon}`);
+      } else {
+        setSuggestions(results);
+        setShowSuggestions(true);
+      }
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSelectCity = (r) => {
+    setShowSuggestions(false);
+    navigate(`/detail/${encodeURIComponent(r.name)}?lat=${r.lat}&lon=${r.lon}`);
   };
 
   return (
@@ -33,14 +60,42 @@ const Search = () => {
                 type="text"
                 placeholder="es. Roma, Catanzaro, Napoli, Londra..."
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                  if (showSuggestions) setShowSuggestions(false);
+                }}
                 className="search-input"
               />
-              <button type="submti" className="search-button">
-                🔍 Cerca
+              <button type="submit" className="search-button" disabled={loading}>
+                {loading ? "⏳" : "🔍"} Cerca
               </button>
             </div>
           </form>
+
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="suggestions-container">
+              <p className="suggestions-title">
+                Sono state trovate più città. Seleziona quella giusta:
+              </p>
+              <div className="suggestions-list">
+                {suggestions.map((r, index) => (
+                  <button
+                    key={index}
+                    className="suggestion-item"
+                    onClick={() => handleSelectCity(r)}
+                  >
+                    <span className="suggestion-name">
+                      {r.name}{r.state ? `, ${r.state}` : ""}
+                    </span>
+                    <span className="suggestion-country">{r.country}</span>
+                    <span className="suggestion-coords">
+                      {r.lat.toFixed(2)}°, {r.lon.toFixed(2)}°
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

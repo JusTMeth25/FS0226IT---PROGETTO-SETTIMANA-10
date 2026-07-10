@@ -5,7 +5,7 @@ const Home = () => {
     <>
       <div className="home-page text-center">
         <div className="mt-5 mb-5">
-          <h1>🌤️ Benvenuto su MeteoApp</h1>
+          <h1>🌤️ Benvenuto su EpiWeather</h1>
           <p
             className="mt-3 mb-4"
             style={{ fontSize: "1.2rem", maxWidth: "600px", margin: "0 auto" }}
@@ -33,7 +33,7 @@ const Home = () => {
         <div className="feature-card">
           <div className="feature-icon">📅</div>
           <h3>Previsioni giornaliere</h3>
-          <p>Visualziza le previsioni per i prossimi giorni.</p>
+          <p>Visualizza le previsioni per i prossimi giorni.</p>
         </div>
       </div>
     </>

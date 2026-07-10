@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          🌤️ MeteoApp
+          🌤️ EpiWeather
         </Link>
         <ul className="navbar-links">
           <li>

@@ -1,7 +1,60 @@
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_URL = "https://api.openweathermap.org/data/2.5";
+const GEO_URL = "https://api.openweathermap.org/geo/1.0";
 
-// utilizzo export cosi e' disponibile anche all'esterno, posso importarla in altri file che mi servono quali ad es. Search, Detail
+/**
+ * Cerca città con la Geocoding API (più precisa, evita ambiguità)
+ * Restituisce un array di risultati con { name, country, lat, lon, state? }
+ */
+export const searchCity = async (query) => {
+  const response = await fetch(
+    `${GEO_URL}/direct?q=${encodeURIComponent(query)}&limit=5&appid=${API_KEY}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Errore nella ricerca della città");
+  }
+
+  const data = await response.json();
+
+  if (!data || data.length === 0) {
+    throw new Error(`Città "${query}" non trovata`);
+  }
+
+  return data;
+};
+
+/**
+ * Ottiene il meteo attuale usando coordinate (lat, lon)
+ */
+export const getCurrentWeatherByCoords = async (lat, lon) => {
+  const response = await fetch(
+    `${API_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=it`
+  );
+
+  if (!response.ok) {
+    throw new Error("Errore nel recupero dei dati meteo");
+  }
+
+  return response.json();
+};
+
+/**
+ * Ottiene le previsioni usando coordinate (lat, lon)
+ */
+export const getForecastByCoords = async (lat, lon) => {
+  const response = await fetch(
+    `${API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=it`
+  );
+
+  if (!response.ok) {
+    throw new Error("Errore nel recupero delle previsioni");
+  }
+
+  return response.json();
+};
+
+// Manteniamo le funzioni originali per compatibilità
 export const getCurrentWeather = async (city) => {
   const response = await fetch(
     `${API_URL}/weather?q=${city}&appid=${API_KEY}&units=metric&lang=it`,
@@ -17,8 +70,6 @@ export const getCurrentWeather = async (city) => {
 
   return response.json();
 };
-
-// Previsioni per 5 giorni (ogni 3 ore) per una città
 
 export const getForecast = async (city) => {
   const response = await fetch(
