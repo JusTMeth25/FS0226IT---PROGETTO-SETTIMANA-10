@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getCurrentWeather, getForecast } from "../services/weatherService";
-// import "./Detail.css";
+import "./Detail.css";
 
 const Detail = () => {
   const { city } = useParams();
@@ -33,7 +33,7 @@ const Detail = () => {
     return (
       <div className="detail-page text-center">
         <div className="loading-spinner"></div>
-        <p className="mt-3">Carciamento dati meteo per {city}...</p>
+        <p className="mt-3">Caricamento dati meteo per {city}...</p>
       </div>
     );
   }
@@ -76,7 +76,7 @@ const Detail = () => {
         <div className="weather-details">
           <div className="detail-item">
             <span className="detail-label">🌡️ Percepita</span>
-            <span className="deatail-value">
+            <span className="detail-value">
               {Math.round(weather.main.feels_like)}°C
             </span>
           </div>
@@ -88,7 +88,7 @@ const Detail = () => {
           </div>
           <div className="detail-item">
             <span className="detail-label">💨 Vento</span>
-            <span className="deatail-value">
+            <span className="detail-value">
               {" "}
               {Math.round(weather.wind.speed * 3.6)} km/h
             </span>

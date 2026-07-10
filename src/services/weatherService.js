@@ -1,4 +1,4 @@
-const API_KEY = "ef95724cd9a4bbe118d34c72dc1d6a83";
+const API_KEY = import.meta.env.VITE_API_KEY;
 const API_URL = "https://api.openweathermap.org/data/2.5";
 
 // utilizzo export cosi e' disponibile anche all'esterno, posso importarla in altri file che mi servono quali ad es. Search, Detail
