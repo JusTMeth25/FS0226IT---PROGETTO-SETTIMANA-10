@@ -27,7 +27,7 @@ const Search = () => {
 
       if (results.length === 1) {
         const r = results[0];
-        navigate(`/detail/${encodeURIComponent(r.name)}?lat=${r.lat}&lon=${r.lon}`);
+        navigate(`/detail/${encodeURIComponent(r.name)}?lat=${r.lat}&lon=${r.lon}&country=${r.country}`);
       } else {
         setSuggestions(results);
         setShowSuggestions(true);
