@@ -117,11 +117,11 @@ Questo evita problemi tipici delle query solo testuali, ad esempio città omonim
 
 ### Search page
 
-![Search preview](./docs/screenshots/search-preview.svg)
+![Search preview](./docs/screenshots/search-preview.png)
 
 ### Detail dashboard
 
-![Detail preview](./docs/screenshots/detail-preview.svg)
+![Detail preview](./docs/screenshots/detail-preview.png)
 
 ---
 
@@ -363,7 +363,6 @@ Sono usati:
 - Artwork città con Unsplash
 - UI responsive
 - Test React/Vite configurati
-- Lint senza errori
 
 ---
 
