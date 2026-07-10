@@ -368,4 +368,3 @@ Sono usati:
 
 ## 👨‍💻 Autore
 JusTMeth25 / Lorenzo Melis
-Progetto realizzato come esercitazione React/Vite per una web app meteo moderna, responsive e dinamica.
